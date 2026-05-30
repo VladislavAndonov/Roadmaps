@@ -31,8 +31,25 @@ body {
     background: var(--color-background-primary);
 }
 
+/* ── Page shell ─────────────────────────────────────────────────────────── */
+
+.page {
+    display: flex;
+
+    min-height: 100vh;
+}
+
+/* ── Sidebar nav (desktop default) ──────────────────────────────────────── */
+
 .main-nav {
     position: fixed;
+
+    /* Keep it above content but below any modals */
+
+    z-index: 100;
+    top: 0;
+    bottom: 0;
+    left: 0;
 
     display: flex;
     flex-direction: column;
@@ -49,6 +66,7 @@ body {
     padding: 0.5rem 1rem;
 
     cursor: pointer;
+    white-space: nowrap;
 
     color: var(--color-text-secondary);
     border: 1px solid var(--color-border);
@@ -67,15 +85,23 @@ body {
     font-size: 1.2rem;
 }
 
+/* ── Roadmap content ─────────────────────────────────────────────────────── */
+
 .roadmap {
     max-width: 680px;
     margin: 0 auto;
+
+    /* Push content right of the fixed sidebar on desktop */
+
+    margin-left: calc(160px + 1rem);
     padding: 1.5rem;
 
     border-right: 1px solid var(--color-border);
     border-left: 1px solid var(--color-border);
     background: var(--color-background-secondary);
 }
+
+/* ── Header ──────────────────────────────────────────────────────────────── */
 
 .header-title {
     display: flex;
@@ -116,6 +142,8 @@ body {
     color: var(--color-text-secondary);
 }
 
+/* ── Nav chips bar ───────────────────────────────────────────────────────── */
+
 .nav-bar {
     display: flex;
     flex-wrap: wrap;
@@ -152,6 +180,8 @@ body {
     color: var(--color-text-primary);
     background: var(--color-background-tertiary);
 }
+
+/* ── Sections ────────────────────────────────────────────────────────────── */
 
 .section {
     margin-bottom: 2.5rem;
@@ -194,6 +224,8 @@ body {
     color: var(--color-text-primary);
     background: var(--color-background-tertiary);
 }
+
+/* ── Topic cards ─────────────────────────────────────────────────────────── */
 
 .topic-list {
     display: grid;
@@ -303,6 +335,8 @@ code {
     background: #323231;
 }
 
+/* ── Footer ──────────────────────────────────────────────────────────────── */
+
 .footer {
     font-size: 0.9rem;
     line-height: 1.6;
@@ -319,4 +353,160 @@ code {
     font-weight: 500;
 
     color: var(--color-text-primary);
+}
+
+/*
+════════════════════════════════════════════════════════════════════════════
+   RESPONSIVE — mobile-first breakpoints
+   ════════════════════════════════════════════════════════════════════════════
+*/
+
+/* ── ≤ 768 px  (phones & small tablets) ────────────────────────────────── */
+
+@media(max-width: 768px) {
+    /* Switch sidebar → bottom tab-bar */
+
+    .main-nav {
+        position: fixed;
+        top: auto;
+        right: 0;
+        bottom: 0;
+        left: 0;
+
+        flex-direction: row;
+        justify-content: center;
+
+        padding: 0.6rem 1rem;
+        padding-bottom: calc(0.6rem + env( safe-area-inset-bottom) ); /* notch-safe */
+
+        border-top: 1px solid var(--color-border);
+        background: var(--color-background-secondary);
+
+        backdrop-filter: blur(8px);
+        gap: 0.5rem;
+    }
+
+    .nav-btn {
+        font-size: 0.85rem;
+
+        flex: 1;
+        justify-content: center;
+
+        padding: 0.5rem 0.75rem;
+    }
+
+    /* Roadmap: full-width, no side borders, bottom padding for tab-bar */
+
+    .roadmap {
+        max-width: 100%;
+        margin-left: 0;
+        padding: 1rem;
+        padding-bottom: calc(4rem + env( safe-area-inset-bottom) );
+
+        border-right: none;
+        border-left: none;
+    }
+
+    /* Scale down header */
+
+    .header-title span:first-child {
+        font-size: 1.8rem;
+    }
+
+    .header-title .title-text {
+        font-size: 1.4rem;
+    }
+
+    /* Section title */
+
+    .section-title {
+        font-size: 1.15rem;
+    }
+
+    /* Nav chip bar: horizontal scroll instead of wrap */
+
+    .nav-bar {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+
+        margin-bottom: 1.5rem;
+        padding: 0.75rem;
+
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+    .nav-bar::-webkit-scrollbar {
+        display: none;
+    }
+
+    .nav-chip {
+        flex-shrink: 0;
+    }
+}
+
+/* ── ≤ 480 px  (phones in portrait) ────────────────────────────────────── */
+
+@media(max-width: 480px) {
+    html {
+        font-size: 13px;
+    }
+
+    .header-title span:first-child {
+        font-size: 1.5rem;
+    }
+
+    .header-title .title-text {
+        font-size: 1.2rem;
+    }
+
+    /* Hide button labels, show only icons to save space */
+
+    .nav-btn .btn-label {
+        display: none;
+    }
+
+    .nav-btn {
+        padding: 0.5rem;
+
+        gap: 0;
+    }
+
+    .nav-btn i {
+        font-size: 1.4rem;
+    }
+
+    .topic-name {
+        font-size: 14px;
+    }
+
+    code {
+        font-size: 0.8rem;
+    }
+}
+
+/* ── ≥ 769 px  (tablets & desktops — restore sidebar offset) ───────────── */
+
+@media(min-width: 769px) {
+    /* Ensure roadmap never runs under the sidebar */
+
+    .roadmap {
+        margin-left: 160px;
+    }
+}
+
+/* ── ≥ 1024 px  (wide desktop — center within remaining space) ─────────── */
+
+@media(min-width: 1024px) {
+    .roadmap {
+        margin-right: auto;
+
+        /* Center in the space to the right of the sidebar */
+
+        margin-left: auto;
+
+        /* Account for sidebar width so centering feels natural */
+
+        transform: translateX(80px);
+    }
 }
