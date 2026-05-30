@@ -7,6 +7,7 @@
     --color-background-primary: #191919;
     --color-background-secondary: #202020;
     --color-background-tertiary: #2c2c2c;
+    --color-background-code: #323231;
     --color-border: rgba(255, 255, 255, 0.1);
 }
 
@@ -31,21 +32,14 @@ body {
     background: var(--color-background-primary);
 }
 
-/* ── Page shell ─────────────────────────────────────────────────────────── */
-
 .page {
     display: flex;
 
     min-height: 100vh;
 }
 
-/* ── Sidebar nav (desktop default) ──────────────────────────────────────── */
-
 .main-nav {
     position: fixed;
-
-    /* Keep it above content but below any modals */
-
     z-index: 100;
     top: 0;
     bottom: 0;
@@ -55,6 +49,9 @@ body {
     flex-direction: column;
 
     padding: 1rem;
+
+    border-right: 1px solid var(--color-border);
+    background: var(--color-background-secondary);
 
     gap: 0.5rem;
 }
@@ -71,11 +68,12 @@ body {
     color: var(--color-text-secondary);
     border: 1px solid var(--color-border);
     border-radius: 0.4rem;
-    background: var(--color-background-secondary);
+    background: transparent;
 
     gap: 0.5rem;
 }
 
+.nav-btn.active,
 .nav-btn:hover {
     color: var(--color-text-primary);
     background: var(--color-background-tertiary);
@@ -85,14 +83,8 @@ body {
     font-size: 1.2rem;
 }
 
-/* ── Roadmap content ─────────────────────────────────────────────────────── */
-
 .roadmap {
     max-width: 680px;
-    margin: 0 auto;
-
-    /* Push content right of the fixed sidebar on desktop */
-
     margin-left: calc(160px + 1rem);
     padding: 1.5rem;
 
@@ -100,8 +92,6 @@ body {
     border-left: 1px solid var(--color-border);
     background: var(--color-background-secondary);
 }
-
-/* ── Header ──────────────────────────────────────────────────────────────── */
 
 .header-title {
     display: flex;
@@ -142,8 +132,6 @@ body {
     color: var(--color-text-secondary);
 }
 
-/* ── Nav chips bar ───────────────────────────────────────────────────────── */
-
 .nav-bar {
     display: flex;
     flex-wrap: wrap;
@@ -180,8 +168,6 @@ body {
     color: var(--color-text-primary);
     background: var(--color-background-tertiary);
 }
-
-/* ── Sections ────────────────────────────────────────────────────────────── */
 
 .section {
     margin-bottom: 2.5rem;
@@ -224,8 +210,6 @@ body {
     color: var(--color-text-primary);
     background: var(--color-background-tertiary);
 }
-
-/* ── Topic cards ─────────────────────────────────────────────────────────── */
 
 .topic-list {
     display: grid;
@@ -302,7 +286,7 @@ body {
 
     padding: 10px 14px 12px 14px;
 
-    border-top: 0.5px solid var(--color-border);
+    border-top: 1px solid var(--color-border);
 }
 
 .topic-body.open {
@@ -331,41 +315,12 @@ code {
     text-wrap: nowrap;
 
     color: var(--color-text-code);
-    border-radius: 4px;
-    background: #323231;
-}
-
-/* ── Footer ──────────────────────────────────────────────────────────────── */
-
-.footer {
-    font-size: 0.9rem;
-    line-height: 1.6;
-
-    margin-top: 0.5rem;
-    padding: 12px 14px;
-
-    color: var(--color-text-secondary);
     border: 1px solid var(--color-border);
-    border-radius: 0.5rem;
+    border-radius: 4px;
+    background: var(--color-background-code);
 }
-
-.footer strong {
-    font-weight: 500;
-
-    color: var(--color-text-primary);
-}
-
-/*
-════════════════════════════════════════════════════════════════════════════
-   RESPONSIVE — mobile-first breakpoints
-   ════════════════════════════════════════════════════════════════════════════
-*/
-
-/* ── ≤ 768 px  (phones & small tablets) ────────────────────────────────── */
 
 @media(max-width: 768px) {
-    /* Switch sidebar → bottom tab-bar */
-
     .main-nav {
         position: fixed;
         top: auto;
@@ -395,8 +350,6 @@ code {
         padding: 0.5rem 0.75rem;
     }
 
-    /* Roadmap: full-width, no side borders, bottom padding for tab-bar */
-
     .roadmap {
         max-width: 100%;
         margin-left: 0;
@@ -407,8 +360,6 @@ code {
         border-left: none;
     }
 
-    /* Scale down header */
-
     .header-title span:first-child {
         font-size: 1.8rem;
     }
@@ -417,13 +368,9 @@ code {
         font-size: 1.4rem;
     }
 
-    /* Section title */
-
     .section-title {
         font-size: 1.15rem;
     }
-
-    /* Nav chip bar: horizontal scroll instead of wrap */
 
     .nav-bar {
         overflow-x: auto;
@@ -445,8 +392,6 @@ code {
     }
 }
 
-/* ── ≤ 480 px  (phones in portrait) ────────────────────────────────────── */
-
 @media(max-width: 480px) {
     html {
         font-size: 13px;
@@ -459,8 +404,6 @@ code {
     .header-title .title-text {
         font-size: 1.2rem;
     }
-
-    /* Hide button labels, show only icons to save space */
 
     .nav-btn .btn-label {
         display: none;
@@ -485,28 +428,15 @@ code {
     }
 }
 
-/* ── ≥ 769 px  (tablets & desktops — restore sidebar offset) ───────────── */
-
 @media(min-width: 769px) {
-    /* Ensure roadmap never runs under the sidebar */
-
     .roadmap {
         margin-left: 160px;
     }
 }
 
-/* ── ≥ 1024 px  (wide desktop — center within remaining space) ─────────── */
-
 @media(min-width: 1024px) {
     .roadmap {
         margin-right: auto;
-
-        /* Center in the space to the right of the sidebar */
-
         margin-left: auto;
-
-        /* Account for sidebar width so centering feels natural */
-
-        transform: translateX(80px);
     }
 }

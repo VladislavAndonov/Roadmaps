@@ -36,6 +36,8 @@ function loadRoadmap(type) {
     document.querySelector('.header-title i').className =
         `ph-fill ${roadmap.icon}`;
 
+    setActiveNav(type);
+
     renderSections(currentSections);
 }
 
@@ -130,6 +132,14 @@ function renderSections(sections) {
         sectionEl.appendChild(list);
         container.appendChild(sectionEl);
     });
+}
+
+function setActiveNav(type) {
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+
+    document.getElementById(type).classList.add('active');
 }
 
 document.getElementById('js').addEventListener('click', () => {
